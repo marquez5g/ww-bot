@@ -2,6 +2,10 @@
   "name": "ww-bot",
   "version": "0.0.0",
   "private": true,
+  "nodemonConfig": {
+    "ignore": ["session.json"],
+    "delay": 2500
+  },
   "scripts": {
     "start": "node ./bin/www"
   },
@@ -14,5 +18,7 @@
     "morgan": "~1.9.1",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.13.2"
+  },
+  "devDependencies": {
   }
 }
