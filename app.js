@@ -43,7 +43,7 @@ client.on('ready', () => {
   console.log('Client is ready!');
 });
 
-client.on('message', message => {
+client.on('message', async message => {
   console.log(message.body);
 	if(message.body === '!ping') {
 		message.reply('pong');
@@ -53,7 +53,15 @@ client.on('message', message => {
     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     let dateTime = date+' '+time;
     message.reply(dateTime);
-  }
+  } else if (message.body.startsWith('!join ')) {
+    const inviteCode = message.body.split(' ')[1];
+    try {
+        await client.acceptInvite(inviteCode);
+        message.reply('Joined the group!');
+    } catch (e) {
+      message.reply('That invite code seems to be invalid.');
+    }
+}
 });
 
 client.initialize();
