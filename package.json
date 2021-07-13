@@ -9,17 +9,17 @@
     "delay": 2500
   },
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/ww-bot",
+    "lint": "eslint src"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.13.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4"
+  }
 }

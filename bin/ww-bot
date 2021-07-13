@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+const debug = require('debug')('ww-bot:server');
+
+debug('App initialized');
