@@ -2,8 +2,7 @@ const { BaseHandler } = require('../handler');
 
 class Handler extends BaseHandler {
   constructor() {
-    super();
-    this.name = 'hour';
+    super('hour');
     this.command = 'hora';
   }
 

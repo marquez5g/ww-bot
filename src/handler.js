@@ -9,10 +9,10 @@ class BaseHandler extends events.EventEmitter {
   /**
    * This is the handler base class.
    */
-  constructor() {
+  constructor(name) {
     super();
     /** @type { String } */
-    this.name = null;
+    this.name = name;
   }
 
   /**
