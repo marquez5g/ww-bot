@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const events = require('events');
 const debug = require('debug')('ww-bot:handler');
 
@@ -14,16 +15,20 @@ class BaseHandler extends events.EventEmitter {
     /** @type { String } */
     this.name = name;
 
-    this.on('message', this.onMessage.bind(this));
+    this.on('message', this.onPreMessage.bind(this));
+  }
+
+  onPreMessage(message) {
+    debug(message);
+    this.onMessage(message);
   }
 
   /**
    * Listens the `message` event.
-   * @param { Message } message The message object.
+   * @param { Message } _message The message object.
    * @returns { BaseHandler }
    */
   onMessage(message) {
-    debug(message);
     return this;
   }
 }
