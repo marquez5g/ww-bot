@@ -2,6 +2,7 @@
   "name": "ww-bot",
   "version": "0.0.0",
   "private": true,
+  "main": "src/index.js",
   "nodemonConfig": {
     "ignore": [
       "session.json"
@@ -10,6 +11,7 @@
   },
   "scripts": {
     "start": "node ./bin/ww-bot",
+    "dev": "DEBUG=ww-bot:* nodemon ./bin/ww-bot",
     "lint": "eslint src"
   },
   "dependencies": {
@@ -20,6 +22,7 @@
   "devDependencies": {
     "eslint": "^7.30.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.23.4"
+    "eslint-plugin-import": "^2.23.4",
+    "nodemon": "^2.0.12"
   }
 }

@@ -3,7 +3,29 @@
 /**
  * Module dependencies.
  */
-
+const fs = require('fs');
+const path = require('path');
 const debug = require('debug')('ww-bot:server');
+const { WWBot } = require('../src/index');
 
-debug('App initialized');
+const wwbot = new WWBot(path.join(__dirname, '..', 'session.json'));
+
+const handlersPath = path.join(__dirname, '..', 'src/handlers');
+const handlersFilename = fs.readdirSync(handlersPath, {});
+
+// Loads all handlers
+handlersFilename.forEach((filename) => {
+  debug('loading', filename);
+
+  // eslint-disable-next-line global-require
+  const HandlerClass = require(path.join(handlersPath, filename));
+  const handler = new HandlerClass();
+
+  // Add handler
+  wwbot.addHandler(handler, () => {
+    debug('module', filename, 'loaded');
+  });
+});
+
+debug('app initialized');
+wwbot.start();
