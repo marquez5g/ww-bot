@@ -23,7 +23,7 @@ Or if you use [pm2](https://pm2.keymetrics.io/) then do:
 pm2 start ecosystem.config.js
 ```
 
-If you use **pm2** you can edit the environment variable and set your preferences.
+If you use **pm2** you can edit the environment variable and set your preferences. Edit the file `ecosystem.config.js`:
 ```js
 {
   apps: [
