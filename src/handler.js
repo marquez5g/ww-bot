@@ -13,6 +13,8 @@ class BaseHandler extends events.EventEmitter {
     super();
     /** @type { String } */
     this.name = name;
+
+    this.on('message', this.onMessage.bind(this));
   }
 
   /**

@@ -14,14 +14,16 @@ class WWBot {
    */
   constructor(sessionFilename) {
     // Load the session data if it has been previously saved
-    this.sessionFile = sessionFilename;
+    this.sessionFilename = sessionFilename;
     this.sessionData = null;
+    /** @type { [BaseHandler] } */
+    this.handlers = [];
     this.qrConfig = { small: true };
 
-    if (fs.existsSync(this.sessionFile)) {
+    if (fs.existsSync(this.sessionFilename)) {
       // eslint-disable-next-line global-require
-      this.sessionData = require(this.sessionFile);
-      debug('loaded from file', this.sessionFile);
+      this.sessionData = require(this.sessionFilename);
+      debug('loaded from file', this.sessionFilename);
     } else {
       debug('the session file does not exist');
     }
@@ -30,13 +32,18 @@ class WWBot {
     this.client = new Client({ session: this.sessionData });
 
     // Save session values to the file upon successful auth
-    this.client.on('authenticated', this.onAuthenticated);
+    this.client.on('authenticated', this.onAuthenticated.bind(this));
 
     // Generate QR code
-    this.client.on('qr', this.onQR);
+    this.client.on('qr', this.onQR.bind(this));
 
     this.client.once('ready', () => {
       debug('client is ready!');
+    });
+
+    this.client.on('message', (message) => {
+      debug('receive new message');
+      this.handlers.forEach((handler) => handler.emit('message', message));
     });
   }
 
@@ -45,11 +52,13 @@ class WWBot {
    * @param { Object } session The session object.
    */
   onAuthenticated(session) {
-    fs.writeFile(this.sessionFile, JSON.stringify(session), (err) => {
+    debug('authenticated');
+    debug('save in file', this.sessionFilename);
+    fs.writeFile(this.sessionFilename, JSON.stringify(session), (err) => {
       if (err) {
         console.error(err);
       } else {
-        debug('session saved in file', this.sessionFile);
+        debug('session saved in file', this.sessionFilename);
       }
     });
   }
@@ -77,7 +86,7 @@ class WWBot {
    * @param { AddedHandlerCallback } cb A callback function.
    */
   addHandler(handler, cb) {
-    this.client.on('message', handler.onMessage);
+    this.handlers.push(handler);
     if (cb) {
       debug('call the callback after adding handler');
       cb();
