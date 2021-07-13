@@ -60,3 +60,20 @@ class Handler extends BaseHandler {
 
 module.exports = Handler;
 ```
+
+## Send messages via HTTP request
+
+When the client is running a web server start listening on port defined with `PORT` environment variable or 3000.
+
+### Methods
+
+**sendMessage**:
+| param name | type | detail |
+| ---------- | ---- | ------ |
+| chatId | string | The chat group. This value can be gotten in `Message.from`.
+| text | string | The text to send.
+
+Example:
+```bash
+curl "http://localhost:3000/sendMessage?chatId=chatid-here&text=ctm"
+```
