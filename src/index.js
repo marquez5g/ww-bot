@@ -43,7 +43,17 @@ class WWBot {
     }
 
     // Use the saved values
-    this.client = new Client({ session: this.sessionData });
+    this.client = new Client({
+      session: this.sessionData,
+      puppeteer: {
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--unhandled-rejections=strict',
+        ],
+      },
+    });
 
     // Save session values to the file upon successful auth
     this.client.on('authenticated', this.onAuthenticated.bind(this));
