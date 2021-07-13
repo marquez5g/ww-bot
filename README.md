@@ -63,7 +63,7 @@ module.exports = Handler;
 
 ## Send messages via HTTP request
 
-When the client is running a web server start listening on port defined with `PORT` environment variable or 3000.
+When the client is running a web server start listening on port defined by `PORT` environment variable or 3000.
 
 ### Methods
 
