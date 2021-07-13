@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "node ./bin/ww-bot",
-    "dev": "DEBUG=ww-bot:* nodemon ./bin/ww-bot",
+    "dev": "DEBUG=ww-bot:* WWBOT_SESSION=session.json nodemon ./bin/ww-bot",
     "lint": "eslint src"
   },
   "dependencies": {
