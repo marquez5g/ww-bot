@@ -1,3 +1,6 @@
+const express = require('express');
+const morgan = require('morgan');
+
 const fs = require('fs');
 const qrcode = require('qrcode-terminal');
 const debug = require('debug')('ww-bot:core');
@@ -6,6 +9,17 @@ const { Client } = require('whatsapp-web.js');
 /**
  * @typedef { import('./handler').BaseHandler } BaseHandler
  */
+
+const app = express();
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+} else {
+  app.use(morgan('tiny'));
+}
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 class WWBot {
   /**
@@ -99,4 +113,4 @@ class WWBot {
  * @callback AddedHandlerCallback
  */
 
-module.exports = { WWBot };
+module.exports = { WWBot, app };

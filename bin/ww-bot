@@ -5,8 +5,9 @@
  */
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
 const debug = require('debug')('ww-bot:server');
-const { WWBot } = require('../src/index');
+const { WWBot, app } = require('../src/index');
 
 const sessionFilename = process.env.WWBOT_SESSION;
 if (!sessionFilename) {
@@ -33,5 +34,36 @@ handlersFilename.forEach((filename) => {
   });
 });
 
+// Config the web server
+const port = process.env.PORT || 3000;
+app.set('port', port);
+
+// Add path to send message
+app.get('/sendMessage', async (req, res) => {
+  if (!req.query.chatId || !req.query.text) {
+    return res.json({ ok: false, message: 'missing data' });
+  }
+
+  try {
+    const message = wwbot.client.sendMessage(req.query.chatId, req.query.text);
+    return res.json({ ok: true, id: message.id });
+  } catch (e) {
+    return res.json({ ok: false, message: e });
+  }
+});
+
+// Handler errors
+app.use('/', (req, res) => res.json({ ok: false, message: 'missing method' }));
+
+// Create the web server
+const server = http.createServer(app);
+
+// Start the server
+server.listen(port);
+server.on('listening', () => {
+  console.log('Listening on', port);
+});
+
+// Start the whatsapp web client
 debug('app initialized');
 wwbot.start();
