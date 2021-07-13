@@ -1,4 +1,3 @@
-const debug = require('debug')('ww-bot:ping');
 const { BaseHandler } = require('../handler');
 
 class Handler extends BaseHandler {
@@ -9,7 +8,6 @@ class Handler extends BaseHandler {
   }
 
   onMessage(message) {
-    debug(message.body);
     if (message.body === this.command) {
       message.reply('pong');
     }
