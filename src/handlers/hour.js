@@ -3,7 +3,7 @@ const { BaseHandler } = require('../handler');
 class Handler extends BaseHandler {
   constructor() {
     super('hour');
-    this.command = 'hora';
+    this.command = '!hora';
   }
 
   onMessage(message) {
